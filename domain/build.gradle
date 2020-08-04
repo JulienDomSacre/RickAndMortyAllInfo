@@ -8,3 +8,9 @@ dependencies {
 
 sourceCompatibility = "1.7"
 targetCompatibility = "1.7"
+
+dependencies {
+    //Koin
+    implementation "org.koin:koin-android:2.1.6"
+    testImplementation "org.koin:koin-test:2.1.6"
+}
