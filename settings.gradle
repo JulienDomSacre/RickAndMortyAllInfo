@@ -1,0 +1,7 @@
+include ':network'
+include ':local'
+include ':data'
+include ':domain'
+include ':presentation'
+include ':ui-mobile'
+rootProject.name = "Rick and Morty All info"
