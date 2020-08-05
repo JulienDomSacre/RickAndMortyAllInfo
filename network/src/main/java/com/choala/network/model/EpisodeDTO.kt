@@ -8,5 +8,6 @@ data class EpisodeDTO(
     @SerializedName("air_date")
     val airDate: String,
     val episode: String,
-    val characters: List<String>
+    val characters: List<String>,
+    val url: String
 )

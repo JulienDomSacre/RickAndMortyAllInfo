@@ -13,5 +13,6 @@ data class CharacterDTO(
     @SerializedName("location")
     val lastLocation: LocationDTO,
     val image: String,
-    val episode: List<String>
+    val episode: List<String>,
+    val url: String
 )

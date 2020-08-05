@@ -5,6 +5,6 @@ data class LocationDetail(
     val name: String,
     val type: String,
     val dimension: String,
-    val residents: List<CharacterDetail>,
+    val residents: List<CharacterLite>,
     val url: String
 )

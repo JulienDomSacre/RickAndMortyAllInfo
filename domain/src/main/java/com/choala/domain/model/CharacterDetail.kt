@@ -7,8 +7,8 @@ data class CharacterDetail(
     val species: String,
     val type: String,
     val gender: String,
-    val origin: LocationDetail,
-    val lastLocation: LocationDetail,
+    val origin: LocationLite,
+    val lastLocation: LocationLite,
     val image: String,
     val episode: List<EpisodeLite>
 )
