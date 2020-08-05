@@ -9,7 +9,7 @@ val domainModule = module {
     }
 
     factory {
-        GetCharatersWithPagination(repository = get())
+        GetCharactersWithPagination(repository = get())
     }
 
     factory {

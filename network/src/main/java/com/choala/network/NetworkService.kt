@@ -23,5 +23,5 @@ interface NetworkService {
     fun getLocation(@Path("id") locationId: Int): Response<LocationDTO>
 
     @GET("episode/{id}")
-    fun getEpisode(@Path("id") locationId: Int): Response<EpisodeDTO>
+    fun getEpisode(@Path("id") episodeId: Int): Response<EpisodeDTO>
 }

@@ -1,37 +1,36 @@
 package com.choala.network.mapper
 
-import com.choala.domain.model.CharacterDetail
-import com.choala.domain.model.CharacterLite
-import com.choala.domain.model.EpisodeLite
-import com.choala.domain.model.LocationLite
+import com.choala.data.model.CharacterData
+import com.choala.data.model.CharacterListData
 import com.choala.network.model.CharacterDTO
+import com.choala.network.model.CharactersListDTO
+import com.choala.network.util.UrlHelper
 
 class CharacterDTOMapper {
-    fun mapToCharacterDetail(
-        dto: CharacterDTO,
-        origin: LocationLite,
-        lastLocation: LocationLite,
-        episodeList: List<EpisodeLite>
-    ): CharacterDetail {
-        return CharacterDetail(
+    fun mapToCharacterData(
+        dto: CharacterDTO
+    ): CharacterData {
+        return CharacterData(
             dto.id,
             dto.name,
             dto.status,
             dto.species,
             dto.type,
             dto.gender,
-            origin,
-            lastLocation,
+            UrlHelper.getIdInUrl(dto.lastLocation.url),
+            UrlHelper.getIdInUrl(dto.origin.url),
             dto.image,
-            episodeList
+            dto.episode.map { UrlHelper.getIdInUrl(it) },
+            dto.url
         )
     }
 
-    fun mapToCharacterLite(dto: CharacterDTO): CharacterLite {
-        return CharacterLite(
-            dto.id,
-            dto.name,
-            dto.url
-        )
+
+    fun mapToCharactersListData(
+        dto: CharactersListDTO
+    ): CharacterListData {
+        return CharacterListData(
+            dto.pagination.pages,
+            dto.charactersList.map { mapToCharacterData(it) })
     }
 }

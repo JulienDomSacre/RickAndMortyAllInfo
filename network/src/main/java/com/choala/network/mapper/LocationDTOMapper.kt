@@ -1,18 +1,20 @@
 package com.choala.network.mapper
 
-import com.choala.domain.model.CharacterLite
-import com.choala.domain.model.LocationDetail
+import com.choala.data.model.LocationData
+import com.choala.data.model.LocationListData
 import com.choala.domain.model.LocationLite
 import com.choala.network.model.LocationDTO
+import com.choala.network.model.LocationsListDTO
+import com.choala.network.util.UrlHelper
 
 class LocationDTOMapper {
-    fun mapToLocationDetail(dto: LocationDTO, characterList: List<CharacterLite>): LocationDetail {
-        return LocationDetail(
+    fun mapToLocationData(dto: LocationDTO): LocationData {
+        return LocationData(
             dto.id,
             dto.name,
             dto.type,
             dto.dimension,
-            characterList,
+            dto.residents.map { UrlHelper.getIdInUrl(it) },
             dto.url
         )
     }
@@ -23,5 +25,13 @@ class LocationDTOMapper {
             dto.name,
             dto.url
         )
+    }
+
+    fun mapToLocationsList(
+        dto: LocationsListDTO
+    ): LocationListData {
+        return LocationListData(
+            dto.pagination.pages,
+            dto.locationsList.map { mapToLocationData(it) })
     }
 }
