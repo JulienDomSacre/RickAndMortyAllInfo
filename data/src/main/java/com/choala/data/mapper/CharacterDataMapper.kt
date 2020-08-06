@@ -37,7 +37,6 @@ class CharacterDataMapper {
         data: CharacterListData
     ): CharacterList {
         return CharacterList(
-            data.page,
             data.charactersList.map { mapToCharacterLite(it) })
     }
 }

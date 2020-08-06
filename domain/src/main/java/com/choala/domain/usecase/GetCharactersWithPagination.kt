@@ -1,13 +1,14 @@
 package com.choala.domain.usecase
 
-import com.choala.domain.model.CharacterList
+import androidx.paging.PagingData
+import com.choala.domain.model.CharacterLite
 import com.choala.domain.repo.Repository
-import com.choala.domain.state.Resource
+import kotlinx.coroutines.flow.Flow
 
 class GetCharactersWithPagination(
     private val repository: Repository
 ) {
-    suspend fun getCharacters(page: Int = 0): Resource<CharacterList> {
-        return repository.getCharacters(page)
+    fun getCharacters(): Flow<PagingData<CharacterLite>> {
+        return repository.getCharacters()
     }
 }

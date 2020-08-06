@@ -1,10 +1,12 @@
 package com.choala.domain.repo
 
+import androidx.paging.PagingData
 import com.choala.domain.model.*
 import com.choala.domain.state.Resource
+import kotlinx.coroutines.flow.Flow
 
 interface Repository {
-    suspend fun getCharacters(page: Int): Resource<CharacterList>
+    fun getCharacters(): Flow<PagingData<CharacterLite>>
     suspend fun getCharacter(id: Int): Resource<Character>
     suspend fun getLocations(page: Int): Resource<LocationList>
     suspend fun getLocationDetail(id: Int): Location

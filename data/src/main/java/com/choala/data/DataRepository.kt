@@ -1,8 +1,12 @@
 package com.choala.data
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.choala.data.mapper.CharacterDataMapper
 import com.choala.data.mapper.EpisodeDataMapper
 import com.choala.data.mapper.LocationDataMapper
+import com.choala.data.pagingSource.CharactersPagingSource
 import com.choala.data.repository.RepoCharacterNetwork
 import com.choala.data.repository.RepoEpisodeNetwork
 import com.choala.data.repository.RepoLocationNetwork
@@ -11,6 +15,7 @@ import com.choala.domain.repo.Repository
 import com.choala.domain.state.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
 class DataRepository(
@@ -21,12 +26,11 @@ class DataRepository(
     private val locationMapper: LocationDataMapper,
     private val episodeMapper: EpisodeDataMapper
 ) : Repository {
-    override suspend fun getCharacters(page: Int): Resource<CharacterList> {
-        return Resource.Success(
-            characterMapper.mapToCharactersList(
-                repoCharacter.getCharacters(page).data!!
-            )
-        )
+    override fun getCharacters(): Flow<PagingData<CharacterLite>> {
+        return Pager(
+            PagingConfig(pageSize = 20),
+            pagingSourceFactory = { CharactersPagingSource(repoCharacter, characterMapper) }
+        ).flow
     }
 
     override suspend fun getCharacter(id: Int): Resource<Character> = withContext(Dispatchers.IO) {
@@ -90,5 +94,9 @@ class DataRepository(
 
     override suspend fun getEpisodeDetail(id: Int): Episode {
         TODO("Not yet implemented")
+    }
+
+    companion object {
+        private const val NETWORK_PAGE_SIZE = 20
     }
 }
