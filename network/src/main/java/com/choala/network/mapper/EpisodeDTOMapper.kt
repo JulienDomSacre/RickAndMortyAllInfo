@@ -1,18 +1,21 @@
 package com.choala.network.mapper
 
-import com.choala.domain.model.CharacterLite
-import com.choala.domain.model.EpisodeDetail
+import com.choala.data.model.EpisodeData
+import com.choala.data.model.EpisodesListData
 import com.choala.domain.model.EpisodeLite
 import com.choala.network.model.EpisodeDTO
+import com.choala.network.model.EpisodesListDTO
+import com.choala.network.util.UrlHelper
 
 class EpisodeDTOMapper {
-    fun mapToEpisodeDetail(dto: EpisodeDTO, charactersList: List<CharacterLite>): EpisodeDetail {
-        return EpisodeDetail(
+    fun mapToEpisodeData(dto: EpisodeDTO): EpisodeData {
+        return EpisodeData(
             dto.id,
             dto.name,
             dto.airDate,
             dto.episode,
-            charactersList
+            dto.characters.map { UrlHelper.getIdInUrl(it) },
+            dto.url
         )
     }
 
@@ -22,6 +25,13 @@ class EpisodeDTOMapper {
             dto.name,
             dto.episode,
             dto.url
+        )
+    }
+
+    fun mapToEpisodesListData(dto: EpisodesListDTO): EpisodesListData {
+        return EpisodesListData(
+            dto.pagination.pages,
+            dto.episodesList.map { mapToEpisodeData(it) }
         )
     }
 }

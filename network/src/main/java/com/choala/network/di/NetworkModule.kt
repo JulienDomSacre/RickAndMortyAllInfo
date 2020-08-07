@@ -1,7 +1,15 @@
 package com.choala.network.di
 
+import com.choala.data.repository.RepoCharacterNetwork
+import com.choala.data.repository.RepoEpisodeNetwork
+import com.choala.data.repository.RepoLocationNetwork
+import com.choala.network.NetworkCharacterService
+import com.choala.network.NetworkEpisodeService
+import com.choala.network.NetworkLocationService
 import com.choala.network.NetworkService
-import com.choala.network.NetworkServiceImpl
+import com.choala.network.mapper.CharacterDTOMapper
+import com.choala.network.mapper.EpisodeDTOMapper
+import com.choala.network.mapper.LocationDTOMapper
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -56,9 +64,29 @@ val networkModule = module {
         get<Retrofit>().create(NetworkService::class.java)
     }
 
-    single {
-        NetworkServiceImpl(
-            networkService = get()
+    factory { CharacterDTOMapper() }
+    factory { EpisodeDTOMapper() }
+    factory { LocationDTOMapper() }
+
+    single<RepoCharacterNetwork> {
+        NetworkCharacterService(
+            networkService = get(),
+            characterMapper = get()
         )
     }
+
+    single<RepoEpisodeNetwork> {
+        NetworkEpisodeService(
+            networkService = get(),
+            episodeMapper = get()
+        )
+    }
+    single<RepoLocationNetwork> {
+        NetworkLocationService(
+            networkService = get(),
+            locationMapper = get()
+        )
+    }
+
+
 }
