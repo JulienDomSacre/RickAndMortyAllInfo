@@ -2,6 +2,8 @@ package com.choala.network.util
 
 object UrlHelper {
     fun getIdInUrl(url: String?): Int? {
-        return url?.split("/")?.last()?.toInt()
+        if (url?.isNotEmpty()!!)
+            return url.split("/").last().toInt()
+        return 1
     }
 }

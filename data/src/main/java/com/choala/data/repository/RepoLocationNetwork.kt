@@ -5,6 +5,6 @@ import com.choala.data.model.LocationListData
 import com.choala.domain.state.Resource
 
 interface RepoLocationNetwork {
-    fun getLocation(id: Int): Resource<LocationData>
-    fun getLocationsList(page: Int): Resource<LocationListData>
+    suspend fun getLocation(id: Int): Resource<LocationData>
+    suspend fun getLocationsList(page: Int): Resource<LocationListData>
 }

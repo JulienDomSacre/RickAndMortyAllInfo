@@ -10,7 +10,7 @@ class NetworkLocationService(
     private val networkService: NetworkService,
     private val locationMapper: LocationDTOMapper
 ) : RepoLocationNetwork {
-    override fun getLocation(id: Int): Resource<LocationData> {
+    override suspend fun getLocation(id: Int): Resource<LocationData> {
         val response = networkService.getLocation(id)
         when {
             response.isSuccessful -> return Resource.Success(
@@ -22,7 +22,7 @@ class NetworkLocationService(
         return Resource.Error("error")
     }
 
-    override fun getLocationsList(page: Int): Resource<LocationListData> {
+    override suspend fun getLocationsList(page: Int): Resource<LocationListData> {
         TODO("Not yet implemented")
     }
 }

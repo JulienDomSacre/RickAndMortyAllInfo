@@ -17,8 +17,8 @@ class CharactersListFragment : Fragment(R.layout.fragment_characters_list) {
     private var searchJob: Job? = null
     private val adapter = CharactersListAdapter()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
         initAdapter()
         loadCharacters()

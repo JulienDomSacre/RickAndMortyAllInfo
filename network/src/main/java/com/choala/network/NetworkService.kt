@@ -8,20 +8,20 @@ import retrofit2.http.Query
 
 interface NetworkService {
     @GET("character/")
-    fun getCharactersAtPage(@Query("page") page: Int): Response<CharactersListDTO>
+    suspend fun getCharactersAtPage(@Query("page") page: Int): Response<CharactersListDTO>
 
     @GET("location/")
-    fun getLocationAtPage(@Query("page") page: Int): Response<LocationsListDTO>
+    suspend fun getLocationAtPage(@Query("page") page: Int): Response<LocationsListDTO>
 
     @GET("episode/")
-    fun getEpisodeAtPage(@Query("page") page: Int): Response<EpisodesListDTO>
+    suspend fun getEpisodeAtPage(@Query("page") page: Int): Response<EpisodesListDTO>
 
     @GET("character/{id}")
-    fun getCharacter(@Path("id") characterId: Int): Response<CharacterDTO>
+    suspend fun getCharacter(@Path("id") characterId: Int): Response<CharacterDTO>
 
     @GET("location/{id}")
-    fun getLocation(@Path("id") locationId: Int): Response<LocationDTO>
+    suspend fun getLocation(@Path("id") locationId: Int): Response<LocationDTO>
 
     @GET("episode/{id}")
-    fun getEpisode(@Path("id") episodeId: Int): Response<EpisodeDTO>
+    suspend fun getEpisode(@Path("id") episodeId: Int): Response<EpisodeDTO>
 }

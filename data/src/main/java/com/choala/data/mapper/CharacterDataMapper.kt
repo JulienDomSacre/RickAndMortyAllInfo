@@ -29,7 +29,7 @@ class CharacterDataMapper {
         return CharacterLite(
             data.id,
             data.name,
-            data.url
+            data.image
         )
     }
 

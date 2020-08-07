@@ -1,5 +1,8 @@
 package com.choala.network.di
 
+import com.choala.data.repository.RepoCharacterNetwork
+import com.choala.data.repository.RepoEpisodeNetwork
+import com.choala.data.repository.RepoLocationNetwork
 import com.choala.network.NetworkCharacterService
 import com.choala.network.NetworkEpisodeService
 import com.choala.network.NetworkLocationService
@@ -65,20 +68,20 @@ val networkModule = module {
     factory { EpisodeDTOMapper() }
     factory { LocationDTOMapper() }
 
-    single {
+    single<RepoCharacterNetwork> {
         NetworkCharacterService(
             networkService = get(),
             characterMapper = get()
         )
     }
 
-    single {
+    single<RepoEpisodeNetwork> {
         NetworkEpisodeService(
             networkService = get(),
             episodeMapper = get()
         )
     }
-    single {
+    single<RepoLocationNetwork> {
         NetworkLocationService(
             networkService = get(),
             locationMapper = get()
