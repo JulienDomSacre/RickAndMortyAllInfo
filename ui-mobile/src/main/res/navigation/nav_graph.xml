@@ -2,10 +2,23 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/charactersListFragment">
+    app:startDestination="@id/charactersList">
 
     <fragment
-        android:id="@+id/charactersListFragment"
+        android:id="@+id/charactersList"
         android:name="com.choala.rickandmortyallinfo.characterList.CharactersListFragment"
-        android:label="CharactersListFragment" />
+        android:label="CharactersListFragment">
+        <action
+            android:id="@+id/action_characterList_to_detail"
+            app:destination="@id/characterDetail" />
+    </fragment>
+    <fragment
+        android:id="@+id/characterDetail"
+        android:name="com.choala.rickandmortyallinfo.characterDetail.CharacterDetailFragment"
+        android:label="CharacterDetailFragment">
+        <argument
+            android:name="characterId"
+            android:defaultValue="1"
+            app:argType="integer" />
+    </fragment>
 </navigation>

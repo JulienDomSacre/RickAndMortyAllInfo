@@ -74,10 +74,10 @@ class DataRepository(
                     )
                 )
             }
+            else -> //Compilation error if I don't add the T type
+                Resource.Error<Character>("Error")
         }
 
-        //Compilation error if I don't add the T type
-        Resource.Error<Character>("Error")
     }
 
     override suspend fun getLocations(page: Int): Resource<LocationList> {
