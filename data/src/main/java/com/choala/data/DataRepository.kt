@@ -57,11 +57,14 @@ class DataRepository(
                 }
 
                 val episodeList = async {
-                    state.data!!.episode.map {
-                        when (val stateEpisode = repoEpisode.getEpisode(it!!)) {
-                            is Resource.Success -> episodeMapper.mapToEpisodeLite(stateEpisode.data!!)
-                            else -> null
+                    when (val stateEpisodes =
+                        state.data!!.episode.let { repoEpisode.getEpisodesList(it) }) {
+                        is Resource.Success -> {
+                            stateEpisodes.data!!.map {
+                                episodeMapper.mapToEpisodeLite(it)
+                            }
                         }
+                        else -> emptyList()
                     }
                 }
 

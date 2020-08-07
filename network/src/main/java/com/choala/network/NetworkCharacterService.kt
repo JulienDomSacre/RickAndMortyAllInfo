@@ -15,9 +15,6 @@ class NetworkCharacterService(
         when {
             response.isSuccessful -> {
                 return Resource.Success(characterMapper.mapToCharacterData(response.body()!!))
-                // val lastLocation = getLocation(response.body()?.lastLocation?.url)
-                // val origin = getLocation(response.body()?.origin?.url)
-
             }
         }
         return Resource.Error("error")
