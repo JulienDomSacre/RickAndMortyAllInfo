@@ -1,4 +1,4 @@
-package com.choala.rickandmortyallinfo.characterList
+package com.choala.rickandmortyallinfo.charactersList
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

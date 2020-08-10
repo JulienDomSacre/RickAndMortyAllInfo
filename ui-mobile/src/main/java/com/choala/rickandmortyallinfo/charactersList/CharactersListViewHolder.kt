@@ -1,4 +1,4 @@
-package com.choala.rickandmortyallinfo.characterList
+package com.choala.rickandmortyallinfo.charactersList
 
 import android.view.LayoutInflater
 import android.view.View

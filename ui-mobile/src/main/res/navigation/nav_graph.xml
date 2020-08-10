@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/charactersList"
-        android:name="com.choala.rickandmortyallinfo.characterList.CharactersListFragment"
+        android:name="com.choala.rickandmortyallinfo.charactersList.CharactersListFragment"
         android:label="CharactersListFragment">
         <action
             android:id="@+id/action_characterList_to_detail"
