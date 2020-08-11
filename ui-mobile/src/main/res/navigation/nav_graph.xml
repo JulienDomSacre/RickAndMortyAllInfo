@@ -41,5 +41,18 @@
     <fragment
         android:id="@+id/locationsList"
         android:name="com.choala.rickandmortyallinfo.locationsList.LocationsListFragment"
-        android:label="LocationsListFragment" />
+        android:label="LocationsListFragment">
+        <action
+            android:id="@+id/action_locationsList_to_loationDetailFragment"
+            app:destination="@id/loationDetail" />
+    </fragment>
+    <fragment
+        android:id="@+id/loationDetail"
+        android:name="com.choala.rickandmortyallinfo.locationDetail.LocationDetailFragment"
+        android:label="LoationDetailFragment">
+        <argument
+            android:name="locationId"
+            android:defaultValue="1"
+            app:argType="integer" />
+    </fragment>
 </navigation>

@@ -47,18 +47,18 @@ class DataRepository(
                         state.data!!.originId?.let { getLocationLite(it) }
                     }
 
-                val episodeList = async {
-                    getEpisodeLiteList(state.data!!.episode)
-                }
+                    val episodeList = async {
+                        getEpisodeLiteList(state.data!!.episode)
+                    }
 
-                Resource.Success(
-                    characterMapper.mapToCharacterDetail(
-                        state.data!!,
-                        origin.await(),
-                        lastLocation.await(),
-                        episodeList.await()
+                    Resource.Success(
+                        characterMapper.mapToCharacterDetail(
+                            state.data!!,
+                            origin.await(),
+                            lastLocation.await(),
+                            episodeList.await()
+                        )
                     )
-                )
                 }
                 else -> //Compilation error if I don't add the T type
                     Resource.Error<Character>("Error")
@@ -73,9 +73,26 @@ class DataRepository(
         ).flow
     }
 
-    override suspend fun getLocationDetail(id: Int): Location {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getLocationDetail(id: Int): Resource<Location> =
+        withContext(Dispatchers.IO) {
+            when (val state = repoLocation.getLocation(id)) {
+                is Resource.Success -> {
+                    val characterList = async {
+                        getCharacterLiteList(state.data!!.residentsId)
+                    }
+
+                    Resource.Success(
+                        locationMapper.mapToLocationDetail(
+                            state.data!!,
+                            characterList.await()
+                        )
+                    )
+                }
+                else ->
+                    //Compilation error if I don't add the T type
+                    Resource.Error<Location>("Error")
+            }
+        }
 
     override fun getEpisodes(): Flow<PagingData<EpisodeLite>> {
         return Pager(
@@ -89,15 +106,7 @@ class DataRepository(
             when (val state = repoEpisode.getEpisode(id)) {
                 is Resource.Success -> {
                     val characterList = async {
-                        when (val stateCharacter =
-                            state.data!!.charactersId.let { repoCharacter.getCharactersList(it) }) {
-                            is Resource.Success -> {
-                                stateCharacter.data!!.map {
-                                    characterMapper.mapToCharacterLite(it)
-                                }
-                            }
-                            else -> emptyList()
-                        }
+                        getCharacterLiteList(state.data!!.charactersId)
                     }
 
                     Resource.Success(
@@ -110,7 +119,6 @@ class DataRepository(
                 else -> //Compilation error if I don't add the T type
                     Resource.Error<Episode>("Error")
             }
-
         }
 
     private suspend fun getEpisodeLiteList(episodeList: List<Int>): List<EpisodeLite> {
@@ -130,6 +138,17 @@ class DataRepository(
                 locationMapper.mapToLocationLite(state.data!!)
             }
             else -> null
+        }
+    }
+
+    private suspend fun getCharacterLiteList(charactersList: List<Int>): List<CharacterLite> {
+        return when (val state = repoCharacter.getCharactersList(charactersList)) {
+            is Resource.Success -> {
+                state.data!!.map {
+                    characterMapper.mapToCharacterLite(it)
+                }
+            }
+            else -> emptyList()
         }
     }
 

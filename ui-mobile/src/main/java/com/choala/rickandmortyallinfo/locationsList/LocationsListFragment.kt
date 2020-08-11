@@ -3,6 +3,7 @@ package com.choala.rickandmortyallinfo.locationsList
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.choala.presentation.locationsList.LocationListViewModel
 import com.choala.rickandmortyallinfo.R
@@ -16,7 +17,13 @@ class LocationsListFragment : Fragment(R.layout.fragment_list) {
     private val viewModel: LocationListViewModel by viewModel()
     private var searchJob: Job? = null
     private val adapter = LocationsListAdapter { locationClicked ->
-        //TODO
+        val action =
+            locationClicked?.id?.let { locationId ->
+                LocationsListFragmentDirections.actionLocationsListToLoationDetailFragment(
+                    locationId
+                )
+            }
+        action?.let { navDirections -> findNavController().navigate(navDirections) }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

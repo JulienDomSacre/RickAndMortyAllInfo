@@ -10,6 +10,6 @@ interface Repository {
     fun getEpisodes(): Flow<PagingData<EpisodeLite>>
     suspend fun getCharacterDetail(id: Int): Resource<Character>
     fun getLocations(): Flow<PagingData<LocationLite>>
-    suspend fun getLocationDetail(id: Int): Location
+    suspend fun getLocationDetail(id: Int): Resource<Location>
     suspend fun getEpisodeDetail(id: Int): Resource<Episode>
 }
