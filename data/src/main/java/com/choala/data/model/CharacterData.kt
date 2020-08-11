@@ -10,6 +10,6 @@ data class CharacterData(
     val originId: Int?,
     val lastLocationId: Int?,
     val image: String,
-    val episode: List<Int?>,
+    val episode: List<Int>,
     val url: String
 )

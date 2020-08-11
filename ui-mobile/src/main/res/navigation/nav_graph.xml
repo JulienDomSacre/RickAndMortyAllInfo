@@ -2,10 +2,57 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/charactersListFragment">
+    app:startDestination="@id/charactersList">
 
     <fragment
-        android:id="@+id/charactersListFragment"
-        android:name="com.choala.rickandmortyallinfo.characterList.CharactersListFragment"
-        android:label="CharactersListFragment" />
+        android:id="@+id/charactersList"
+        android:name="com.choala.rickandmortyallinfo.charactersList.CharactersListFragment"
+        android:label="CharactersListFragment">
+        <action
+            android:id="@+id/action_characterList_to_detail"
+            app:destination="@id/characterDetail" />
+    </fragment>
+    <fragment
+        android:id="@+id/characterDetail"
+        android:name="com.choala.rickandmortyallinfo.characterDetail.CharacterDetailFragment"
+        android:label="CharacterDetailFragment">
+        <argument
+            android:name="characterId"
+            android:defaultValue="1"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/episodesList"
+        android:name="com.choala.rickandmortyallinfo.episodesList.EpisodesListFragment"
+        android:label="EpisodesListFragment">
+        <action
+            android:id="@+id/action_episodesList_to_episodeDetail"
+            app:destination="@id/episodeDetail" />
+    </fragment>
+    <fragment
+        android:id="@+id/episodeDetail"
+        android:name="com.choala.rickandmortyallinfo.episodeDetail.EpisodeDetailFragment"
+        android:label="EpisodeDetailFragment">
+        <argument
+            android:name="episodeId"
+            android:defaultValue="1"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/locationsList"
+        android:name="com.choala.rickandmortyallinfo.locationsList.LocationsListFragment"
+        android:label="LocationsListFragment">
+        <action
+            android:id="@+id/action_locationsList_to_loationDetailFragment"
+            app:destination="@id/loationDetail" />
+    </fragment>
+    <fragment
+        android:id="@+id/loationDetail"
+        android:name="com.choala.rickandmortyallinfo.locationDetail.LocationDetailFragment"
+        android:label="LoationDetailFragment">
+        <argument
+            android:name="locationId"
+            android:defaultValue="1"
+            app:argType="integer" />
+    </fragment>
 </navigation>

@@ -15,9 +15,6 @@ class NetworkCharacterService(
         when {
             response.isSuccessful -> {
                 return Resource.Success(characterMapper.mapToCharacterData(response.body()!!))
-                // val lastLocation = getLocation(response.body()?.lastLocation?.url)
-                // val origin = getLocation(response.body()?.origin?.url)
-
             }
         }
         return Resource.Error("error")
@@ -33,5 +30,15 @@ class NetworkCharacterService(
             }
         }
         return Resource.Error("Error")
+    }
+
+    override suspend fun getCharactersList(idList: List<Int>): Resource<List<CharacterData>> {
+        val response = networkService.getCharactersList(idList)
+        when {
+            response.isSuccessful -> return Resource.Success(
+                response.body()!!.map { characterMapper.mapToCharacterData(it) }
+            )
+        }
+        return Resource.Error("error")
     }
 }

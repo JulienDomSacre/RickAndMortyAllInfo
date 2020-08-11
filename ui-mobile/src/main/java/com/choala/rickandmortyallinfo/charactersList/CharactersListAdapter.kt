@@ -1,4 +1,4 @@
-package com.choala.rickandmortyallinfo.characterList
+package com.choala.rickandmortyallinfo.charactersList
 
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.choala.domain.model.CharacterLite
 
-class CharactersListAdapter :
+class CharactersListAdapter(val onClick: (CharacterLite?) -> Unit) :
     PagingDataAdapter<CharacterLite, RecyclerView.ViewHolder>(REPO_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -17,6 +17,7 @@ class CharactersListAdapter :
         val repoItem = getItem(position)
         if (repoItem != null) {
             (holder as CharactersListViewHolder).bind(repoItem)
+            holder.itemView.setOnClickListener { onClick(getItem(position)) }
         }
     }
 

@@ -1,4 +1,4 @@
-package com.choala.rickandmortyallinfo.characterList
+package com.choala.rickandmortyallinfo.charactersList
 
 import android.view.LayoutInflater
 import android.view.View
@@ -17,9 +17,6 @@ class CharactersListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                 placeholder(R.drawable.rick_placeholder)
             }
         }
-    }
-
-    init {
     }
 
     companion object {

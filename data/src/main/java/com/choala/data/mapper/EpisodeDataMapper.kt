@@ -27,7 +27,7 @@ class EpisodeDataMapper {
         )
     }
 
-    fun mapToEpisodesList(data: EpisodesListData, episodesList: List<EpisodeLite>): EpisodeList {
-        return EpisodeList(data.page, episodesList)
+    fun mapToEpisodesList(data: EpisodesListData): EpisodeList {
+        return EpisodeList(data.episodeList.map { mapToEpisodeLite(it) })
     }
 }

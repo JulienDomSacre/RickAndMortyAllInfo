@@ -6,5 +6,5 @@ import com.choala.domain.state.Resource
 
 interface RepoLocationNetwork {
     suspend fun getLocation(id: Int): Resource<LocationData>
-    suspend fun getLocationsList(page: Int): Resource<LocationListData>
+    suspend fun getLocationsWithPagination(page: Int): Resource<LocationListData>
 }

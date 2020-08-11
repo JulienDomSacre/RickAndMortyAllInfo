@@ -22,8 +22,26 @@ class NetworkEpisodeService(
         return Resource.Error("error")
     }
 
-    override suspend fun getEpisodes(page: Int): Resource<EpisodesListData> {
-        TODO("Not yet implemented")
+    override suspend fun getEpisodesWithPagination(page: Int): Resource<EpisodesListData> {
+        val response = networkService.getEpisodeAtPage(page)
+        when {
+            response.isSuccessful -> {
+                return Resource.Success(
+                    episodeMapper.mapToEpisodesListData(response.body()!!)
+                )
+            }
+        }
+        return Resource.Error("Error")
+    }
+
+    override suspend fun getEpisodesList(idList: List<Int>): Resource<List<EpisodeData>> {
+        val response = networkService.getEpisodesList(idList)
+        when {
+            response.isSuccessful -> return Resource.Success(
+                response.body()!!.map { episodeMapper.mapToEpisodeData(it) }
+            )
+        }
+        return Resource.Error("error")
     }
 
 }

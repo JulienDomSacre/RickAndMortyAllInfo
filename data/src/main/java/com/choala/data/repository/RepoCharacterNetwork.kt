@@ -7,4 +7,5 @@ import com.choala.domain.state.Resource
 interface RepoCharacterNetwork {
     suspend fun getCharacter(id: Int): Resource<CharacterData>
     suspend fun getCharacters(page: Int): Resource<CharacterListData>
+    suspend fun getCharactersList(idList: List<Int>): Resource<List<CharacterData>>
 }

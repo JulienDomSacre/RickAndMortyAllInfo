@@ -9,7 +9,7 @@ class CharacterDataMapper {
         data: CharacterData,
         origin: LocationLite?,
         lastLocation: LocationLite?,
-        episodeList: List<EpisodeLite?>
+        episodeList: List<EpisodeLite>
     ): Character {
         return Character(
             data.id,

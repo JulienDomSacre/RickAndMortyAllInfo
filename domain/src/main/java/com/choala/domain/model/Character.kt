@@ -10,5 +10,5 @@ data class Character(
     val origin: LocationLite?,
     val lastLocation: LocationLite?,
     val image: String,
-    val episode: List<EpisodeLite?>
+    val episode: List<EpisodeLite>?
 )
