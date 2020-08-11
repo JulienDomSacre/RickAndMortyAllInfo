@@ -11,5 +11,5 @@ interface Repository {
     suspend fun getCharacter(id: Int): Resource<Character>
     suspend fun getLocations(page: Int): Resource<LocationList>
     suspend fun getLocationDetail(id: Int): Location
-    suspend fun getEpisodeDetail(id: Int): Episode
+    suspend fun getEpisodeDetail(id: Int): Resource<Episode>
 }

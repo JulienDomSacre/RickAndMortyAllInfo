@@ -3,6 +3,7 @@ package com.choala.rickandmortyallinfo.episodesList
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.choala.presentation.episodesList.EpisodesListViewModel
 import com.choala.rickandmortyallinfo.R
@@ -15,8 +16,12 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class EpisodesListFragment : Fragment(R.layout.fragment_list) {
     private val viewModel: EpisodesListViewModel by viewModel()
     private var searchJob: Job? = null
-    private val adapter = EpisodesListAdapter {
-        //TODO
+    private val adapter = EpisodesListAdapter { episodeClicked ->
+        val action =
+            episodeClicked?.id?.let { episodeId ->
+                EpisodesListFragmentDirections.actionEpisodesListToEpisodeDetail(episodeId)
+            }
+        action?.let { navDirections -> findNavController().navigate(navDirections) }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

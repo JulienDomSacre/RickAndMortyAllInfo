@@ -26,7 +26,7 @@ interface NetworkService {
     suspend fun getEpisode(@Path("id") episodeId: Int): Response<EpisodeDTO>
 
     @GET("character/{ids}")
-    suspend fun getCharactersList(@Path("ids") ids: String): Response<CharactersListDTO>
+    suspend fun getCharactersList(@Path("ids") ids: List<Int>): Response<List<CharacterDTO>>
 
     @GET("location/{ids}")
     suspend fun getLocationsList(@Path("ids") ids: List<Int>): Response<LocationsListDTO>

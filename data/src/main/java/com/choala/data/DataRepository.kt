@@ -99,9 +99,34 @@ class DataRepository(
         ).flow
     }
 
-    override suspend fun getEpisodeDetail(id: Int): Episode {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getEpisodeDetail(id: Int): Resource<Episode> =
+        withContext(Dispatchers.IO) {
+            when (val state = repoEpisode.getEpisode(id)) {
+                is Resource.Success -> {
+                    val characterList = async {
+                        when (val stateCharacter =
+                            state.data!!.charactersId.let { repoCharacter.getCharactersList(it) }) {
+                            is Resource.Success -> {
+                                stateCharacter.data!!.map {
+                                    characterMapper.mapToCharacterLite(it)
+                                }
+                            }
+                            else -> emptyList()
+                        }
+                    }
+
+                    Resource.Success(
+                        episodeMapper.mapToEpisodeDetail(
+                            state.data!!,
+                            characterList.await()
+                        )
+                    )
+                }
+                else -> //Compilation error if I don't add the T type
+                    Resource.Error<Episode>("Error")
+            }
+
+        }
 
     companion object {
         private const val NETWORK_PAGE_SIZE = 20

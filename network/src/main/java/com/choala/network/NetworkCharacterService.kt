@@ -31,4 +31,14 @@ class NetworkCharacterService(
         }
         return Resource.Error("Error")
     }
+
+    override suspend fun getCharactersList(idList: List<Int>): Resource<List<CharacterData>> {
+        val response = networkService.getCharactersList(idList)
+        when {
+            response.isSuccessful -> return Resource.Success(
+                response.body()!!.map { characterMapper.mapToCharacterData(it) }
+            )
+        }
+        return Resource.Error("error")
+    }
 }

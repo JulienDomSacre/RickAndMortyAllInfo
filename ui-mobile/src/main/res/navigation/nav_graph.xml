@@ -24,5 +24,18 @@
     <fragment
         android:id="@+id/episodesList"
         android:name="com.choala.rickandmortyallinfo.episodesList.EpisodesListFragment"
-        android:label="EpisodesListFragment" />
+        android:label="EpisodesListFragment">
+        <action
+            android:id="@+id/action_episodesList_to_episodeDetail"
+            app:destination="@id/episodeDetail" />
+    </fragment>
+    <fragment
+        android:id="@+id/episodeDetail"
+        android:name="com.choala.rickandmortyallinfo.episodeDetail.EpisodeDetailFragment"
+        android:label="EpisodeDetailFragment">
+        <argument
+            android:name="episodeId"
+            android:defaultValue="1"
+            app:argType="integer" />
+    </fragment>
 </navigation>
