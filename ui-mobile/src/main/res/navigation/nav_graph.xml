@@ -21,4 +21,8 @@
             android:defaultValue="1"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/episodesList"
+        android:name="com.choala.rickandmortyallinfo.episodesList.EpisodesListFragment"
+        android:label="EpisodesListFragment" />
 </navigation>

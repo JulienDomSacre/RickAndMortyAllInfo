@@ -7,6 +7,7 @@ import com.choala.data.mapper.CharacterDataMapper
 import com.choala.data.mapper.EpisodeDataMapper
 import com.choala.data.mapper.LocationDataMapper
 import com.choala.data.pagingSource.CharactersPagingSource
+import com.choala.data.pagingSource.EpisodesPagingSource
 import com.choala.data.repository.RepoCharacterNetwork
 import com.choala.data.repository.RepoEpisodeNetwork
 import com.choala.data.repository.RepoLocationNetwork
@@ -91,8 +92,11 @@ class DataRepository(
         TODO("Not yet implemented")
     }
 
-    override suspend fun getEpisodes(page: Int): EpisodeList {
-        TODO("Not yet implemented")
+    override fun getEpisodes(): Flow<PagingData<EpisodeLite>> {
+        return Pager(
+            PagingConfig(pageSize = 20),
+            pagingSourceFactory = { EpisodesPagingSource(repoEpisode, episodeMapper) }
+        ).flow
     }
 
     override suspend fun getEpisodeDetail(id: Int): Episode {

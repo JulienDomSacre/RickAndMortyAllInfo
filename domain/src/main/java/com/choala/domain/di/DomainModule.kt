@@ -17,7 +17,7 @@ val domainModule = module {
     }
 
     factory {
-        GetEpisodeWithPagination(repository = get())
+        GetEpisodesWithPagination(repository = get())
     }
 
     factory {

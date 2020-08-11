@@ -1,4 +1,4 @@
-package com.choala.presentation.characterList
+package com.choala.presentation.charactersList
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

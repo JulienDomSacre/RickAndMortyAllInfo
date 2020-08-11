@@ -19,9 +19,6 @@ class CharactersListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         }
     }
 
-    init {
-    }
-
     companion object {
         fun create(parent: ViewGroup): CharactersListViewHolder {
             val view = LayoutInflater.from(parent.context)
