@@ -22,7 +22,15 @@ class NetworkLocationService(
         return Resource.Error("error")
     }
 
-    override suspend fun getLocationsList(page: Int): Resource<LocationListData> {
-        TODO("Not yet implemented")
+    override suspend fun getLocationsWithPagination(page: Int): Resource<LocationListData> {
+        val response = networkService.getLocationAtPage(page)
+        when {
+            response.isSuccessful -> {
+                return Resource.Success(
+                    locationMapper.mapToLocationsListData(response.body()!!)
+                )
+            }
+        }
+        return Resource.Error("Error")
     }
 }

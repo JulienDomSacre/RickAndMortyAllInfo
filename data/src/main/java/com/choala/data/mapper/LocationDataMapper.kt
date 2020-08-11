@@ -28,9 +28,8 @@ class LocationDataMapper {
     }
 
     fun mapToLocationsList(
-        data: LocationListData,
-        locationsList: List<LocationLite>
+        data: LocationListData
     ): LocationList {
-        return LocationList(data.page, locationsList)
+        return LocationList(data.locationsList.map { mapToLocationLite(it) })
     }
 }

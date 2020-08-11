@@ -8,6 +8,7 @@ import com.choala.data.mapper.EpisodeDataMapper
 import com.choala.data.mapper.LocationDataMapper
 import com.choala.data.pagingSource.CharactersPagingSource
 import com.choala.data.pagingSource.EpisodesPagingSource
+import com.choala.data.pagingSource.LocationsPagingSource
 import com.choala.data.repository.RepoCharacterNetwork
 import com.choala.data.repository.RepoEpisodeNetwork
 import com.choala.data.repository.RepoLocationNetwork
@@ -34,16 +35,17 @@ class DataRepository(
         ).flow
     }
 
-    override suspend fun getCharacter(id: Int): Resource<Character> = withContext(Dispatchers.IO) {
-        when (val state = repoCharacter.getCharacter(id)) {
-            is Resource.Success -> {
-                val lastLocation = async {
-                    state.data!!.lastLocationId?.let { getLocationLite(it) }
-                }
+    override suspend fun getCharacterDetail(id: Int): Resource<Character> =
+        withContext(Dispatchers.IO) {
+            when (val state = repoCharacter.getCharacter(id)) {
+                is Resource.Success -> {
+                    val lastLocation = async {
+                        state.data!!.lastLocationId?.let { getLocationLite(it) }
+                    }
 
-                val origin = async {
-                    state.data!!.originId?.let { getLocationLite(it) }
-                }
+                    val origin = async {
+                        state.data!!.originId?.let { getLocationLite(it) }
+                    }
 
                 val episodeList = async {
                     getEpisodeLiteList(state.data!!.episode)
@@ -57,15 +59,18 @@ class DataRepository(
                         episodeList.await()
                     )
                 )
+                }
+                else -> //Compilation error if I don't add the T type
+                    Resource.Error<Character>("Error")
             }
-            else -> //Compilation error if I don't add the T type
-                Resource.Error<Character>("Error")
+
         }
 
-    }
-
-    override suspend fun getLocations(page: Int): Resource<LocationList> {
-        TODO("Not yet implemented")
+    override fun getLocations(): Flow<PagingData<LocationLite>> {
+        return Pager(
+            PagingConfig(pageSize = 20),
+            pagingSourceFactory = { LocationsPagingSource(repoLocation, locationMapper) }
+        ).flow
     }
 
     override suspend fun getLocationDetail(id: Int): Location {

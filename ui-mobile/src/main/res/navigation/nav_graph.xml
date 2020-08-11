@@ -38,4 +38,8 @@
             android:defaultValue="1"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/locationsList"
+        android:name="com.choala.rickandmortyallinfo.locationsList.LocationsListFragment"
+        android:label="LocationsListFragment" />
 </navigation>

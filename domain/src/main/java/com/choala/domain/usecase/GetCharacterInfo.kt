@@ -8,6 +8,6 @@ class GetCharacterInfo(
     private val repository: Repository
 ) {
     suspend fun getCharacter(id: Int): Resource<Character> {
-        return repository.getCharacter(id)
+        return repository.getCharacterDetail(id)
     }
 }
