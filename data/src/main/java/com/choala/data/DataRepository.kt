@@ -38,35 +38,15 @@ class DataRepository(
         when (val state = repoCharacter.getCharacter(id)) {
             is Resource.Success -> {
                 val lastLocation = async {
-                    when (val stateLocation =
-                        state.data!!.lastLocationId?.let { repoLocation.getLocation(it) }) {
-                        is Resource.Success -> {
-                            locationMapper.mapToLocationLite(stateLocation.data!!)
-                        }
-                        else -> null
-                    }
+                    state.data!!.lastLocationId?.let { getLocationLite(it) }
                 }
 
                 val origin = async {
-                    when (val stateOrigin =
-                        state.data!!.originId?.let { repoLocation.getLocation(it) }) {
-                        is Resource.Success -> {
-                            locationMapper.mapToLocationLite(stateOrigin.data!!)
-                        }
-                        else -> null
-                    }
+                    state.data!!.originId?.let { getLocationLite(it) }
                 }
 
                 val episodeList = async {
-                    when (val stateEpisodes =
-                        state.data!!.episode.let { repoEpisode.getEpisodesList(it) }) {
-                        is Resource.Success -> {
-                            stateEpisodes.data!!.map {
-                                episodeMapper.mapToEpisodeLite(it)
-                            }
-                        }
-                        else -> emptyList()
-                    }
+                    getEpisodeLiteList(state.data!!.episode)
                 }
 
                 Resource.Success(
@@ -127,6 +107,26 @@ class DataRepository(
             }
 
         }
+
+    private suspend fun getEpisodeLiteList(episodeList: List<Int>): List<EpisodeLite> {
+        return when (val state = repoEpisode.getEpisodesList(episodeList)) {
+            is Resource.Success -> {
+                state.data!!.map {
+                    episodeMapper.mapToEpisodeLite(it)
+                }
+            }
+            else -> emptyList()
+        }
+    }
+
+    private suspend fun getLocationLite(locationId: Int): LocationLite? {
+        return when (val state = repoLocation.getLocation(locationId)) {
+            is Resource.Success -> {
+                locationMapper.mapToLocationLite(state.data!!)
+            }
+            else -> null
+        }
+    }
 
     companion object {
         private const val NETWORK_PAGE_SIZE = 20
